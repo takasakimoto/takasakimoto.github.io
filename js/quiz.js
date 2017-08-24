@@ -1,4 +1,5 @@
 var nextQuiz = function() {
+	alert("時間切れでーす。次の問題に行きます");
 	window.location.href = "right.html?no=" + quizNo;
 }
 
@@ -45,11 +46,17 @@ function refresh() {
 	} else {
 	  quizNo = arg.no;
 	}
-	$("#quiz").textContent=quizNo;
+	$("#quiz").text("問題" + quizNo + "に答える");
   	if (data.length < quizNo) {
   		return;
   	}
 	quizJson = data[quizNo-1];
+  	//計算式の構築
+  	var operand1 = Math.floor( Math.random() * quizJson.digit1);
+  	var operand2 = Math.floor( Math.random() * quizJson.digit2);
+  	var operator = quizJson.operator;
+  	$("#calc").text(operand1 + operator + operand2);
+  	
 	quizNo = Number(quizNo) + 1;
   	//タイマー設定
 	setTimeout(nextQuiz, quizJson.timeout);

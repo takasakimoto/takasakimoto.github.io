@@ -7,7 +7,7 @@
     "image": [
       "a.png"
     ],
-    "operator": "times",
+    "operator": "×",
     "digit1": 10,
     "digit2": 10
   },
@@ -19,8 +19,8 @@
     "image": [
       "a.png"
     ],
-    "operator": "times",
-    "digit1": 100,
-    "digit2": 10
+    "operator": "÷",
+    "digit1": 1000,
+    "digit2": 100
   }
 ]
