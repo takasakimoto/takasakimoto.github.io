@@ -46,7 +46,7 @@ function refresh() {
 	  quizNo = arg.no;
 	}
 	$("#quiz").textContent=quizNo;
-  	if (data.length =< quizNo) {
+  	if (data.length < quizNo) {
   		return;
   	}
 	quizJson = data[quizNo-1];
