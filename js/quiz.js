@@ -8,7 +8,6 @@ function checkAnswer() {
 	var answerText = document.getElementById("answer");
 	console.log("answer=" + answerText.textContent);
 	console.log("answerCheckJson=" + quizJson);
-	quizNo = Number(quizNo) + 1;
 	console.log("quizNo=" + quizNo);
 	console.log("point=" + point);
 	window.location.href = "right.html?no=" + quizNo;
@@ -52,15 +51,22 @@ function refresh() {
   	}
 	quizJson = data[quizNo-1];
   	//計算式の構築
-  	var operand1 = Math.floor( Math.random() * quizJson.digit1);
-  	var operand2 = Math.floor( Math.random() * quizJson.digit2);
+  	var operand1 = quizJson.ope1from + Math.floor(Math.random() * quizJson.ope1to);
+  	var operand2 = quizJson.ope2from + Math.floor(Math.random() * quizJson.ope2to);
   	var operator = quizJson.operator;
   	$("#calc").text(operand1 + operator + operand2);
   	
 	quizNo = Number(quizNo) + 1;
   	//タイマー設定
 	setTimeout(nextQuiz, quizJson.timeout);
+	$("#answer").focus();
   });
 }
+
+$("#answer").keypress(function (e) {
+	if (e.which == 13) {
+		checkAnswer();
+	}
+});
 
 refresh();

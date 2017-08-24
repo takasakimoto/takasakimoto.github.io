@@ -8,8 +8,10 @@
       "a.png"
     ],
     "operator": "×",
-    "digit1": 10,
-    "digit2": 10
+    "ope1from": 1,
+    "ope1to": 9,
+    "ope2from": 1,
+    "ope2to": 9
   },
   {
     "quiz_level": 2,
@@ -20,7 +22,9 @@
       "a.png"
     ],
     "operator": "÷",
-    "digit1": 1000,
-    "digit2": 100
+    "ope1from": 10,
+    "ope1to": 99,
+    "ope2from": 10,
+    "ope2to": 99
   }
 ]
