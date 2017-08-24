@@ -1,0 +1,26 @@
+[
+  {
+    "quiz_level": 1,
+    "quiz_count": 10,
+    "timeout": 3000,
+    "point": 10,
+    "image": [
+      "a.png"
+    ],
+    "operator": "times",
+    "digit1": 10,
+    "digit2": 10
+  },
+  {
+    "quiz_level": 2,
+    "quiz_count": 10,
+    "timeout": 5000,
+    "point": 20,
+    "image": [
+      "a.png"
+    ],
+    "operator": "times",
+    "digit1": 100,
+    "digit2": 10
+  }
+]
