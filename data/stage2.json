@@ -1,0 +1,14 @@
+{
+	"quiz_level": 2,
+    "quiz_count": 2,
+    "timeout": 5000,
+    "point": 20,
+    "image": [
+		"a.png"
+    ],
+    "operator": "÷",
+    "ope1from": 10,
+    "ope1to": 99,
+    "ope2from": 1,
+    "ope2to": 9
+}
