@@ -1,6 +1,6 @@
 {
 	"quiz_level": 1,
-    "quiz_count": 3,
+    "quiz_count": 4,
     "timeout": 3000,
     "point": 10,
     "image": [
