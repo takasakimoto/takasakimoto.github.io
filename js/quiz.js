@@ -61,14 +61,6 @@ var startQuiz = function(_quizJson) {
 	countDownTime = quizJson.timeout[level-1];
 	$("#count_down").text("残り" + countDownTime + "秒");
 	setTimeoutId = setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
-    var focusTextField = function(){
-        console.log("answer focus");
-    };
-    var onClickHandler = function(){
-        $('#answer').focus();
-    };
-    $('#answer').bind('focus', focusTextField);
-    $('#input_focus').bind('click', onClickHandler);
     $('#input_focus').trigger('click');
 //	$("#answer").focus();
 	$("#answer").keypress(function (e) {
@@ -253,4 +245,15 @@ $.getJSON(jsonFilename ,function(_quizJson) {
 		return;
 	}	
 	startQuiz(_quizJson);
+});
+
+$(document).ready(function(){
+    var focusTextField = function(){
+        console.log("answer focus");
+    };
+    var onClickHandler = function(){
+        $('#answer').focus();
+    };
+    $('#answer').bind('focus', focusTextField);
+    $('#input_focus').bind('click', onClickHandler);
 });
