@@ -134,7 +134,8 @@ var nextQuiz = function(timeout) {
 	}
 	window.location.href = 
 		"right.html"  +
-		"?stage=" + stage + 
+		"?level=" + level + 
+		"&stage=" + stage + 
 		"&quizCount=" + quizCount +
 		"&perfect=" + perfectPoint +
 		"&point=" + point;
