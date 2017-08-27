@@ -3,19 +3,19 @@ var stage = 1;//ステージ
 var level = 1;//難易度
 var quizCount = 1;//問題番号
 var acquisitionPoint = 0;//獲得できるポイント
-var countDownTime = 1;
+var countDownTime = 1;//残り時間
 var setTimeoutId = 0;
 var point = 0;//現在のポイント
 var damagePoint = 0;//不正解もしくは時間切れでダメージを受けるポイント
 var perfectPoint = 0;//全問題正解のポイント
 var opr1 = 0;//計算値
 var opr2 = 0;//計算値
-var operator = "";
+var operator = "";//演算子
 var isConfirm = false;//入力確定しているか？
-var hasNextStage = false;
-var imgPreloader = new Image();
-var imgUrl;
-var imgStyle;
+var hasNextStage = false;//次のステージがあるか？
+var imgPreloader = new Image();//キャラクター表示用
+var imgUrl;//キャラクター画像のURL
+var imgStyle;//SPANタグへのキャラクター画像URLのスタイル設定
 
 imgPreloader.onload=function() {
 	//ロード完了で画像を表示
