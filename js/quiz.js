@@ -10,12 +10,12 @@ var damagePoint = 0;//不正解もしくは時間切れでダメージを受け�
 var perfectPoint = 0;//全問題正解のポイント
 var opr1 = 0;//計算値
 var opr2 = 0;//計算値
-var operator = "";
+var operator = "";//演算子
 var isConfirm = false;//入力確定しているか？
-var hasNextStage = false;
-var imgPreloader = new Image();
-var imgUrl;
-var imgStyle;
+var hasNextStage = false;//次のステージがあるか？
+var imgPreloader = new Image();//キャラクター表示用
+var imgUrl;//キャラクター画像のURL
+var imgStyle;//SPANタグへのキャラクター画像URLのスタイル設定
 
 imgPreloader.onload=function() {
 	//ロード完了で画像を表示
