@@ -233,8 +233,6 @@ console.log("quizCount=" + quizCount);
 console.log("perfect=" + perfectPoint);
 console.log("point=" + point);
 
-
-
 var jsonFilename = "./data/stage" + stage + ".json";
 $.getJSON(jsonFilename ,function(_quizJson) {
 	if (_quizJson === undefined) {
@@ -242,4 +240,15 @@ $.getJSON(jsonFilename ,function(_quizJson) {
 		return;
 	}	
 	startQuiz(_quizJson);
+});
+
+$(document).ready(function(){
+    var focusTextField = function(){
+        console.log("answer focus");
+    };
+    var onClickHandler = function(){
+        $('#input_focus').focus();
+    };
+    $('#answer').bind('focus', focusTextField);
+    $('#input_focus').bind('click', onClickHandler);
 });
