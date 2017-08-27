@@ -6,12 +6,12 @@
     "point": 15,
     "damage_point": 3,
     "image": [
-		"d.jpeg","e.jpeg","f.jpeg"
+		"3-1.jpg","3-2.jpg","3-3.jpg","3-4.jpg","3-5.jpg","3-6.jpg"
     ],
     "operator": "÷",
     "ope1from": 100,
     "ope1to": 999,
-    "ope2from": 1,
+    "ope2from": 3,
     "ope2to": 9,
     "has_next_stage": false
 }

@@ -62,7 +62,6 @@ var startQuiz = function(_quizJson) {
 	$("#count_down").text("残り" + countDownTime + "秒");
 	setTimeoutId = setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
     $('#input_focus').trigger('click');
-//	$("#answer").focus();
 	$("#answer").keypress(function (e) {
 		if (e.which == 13) {
 			isConfirm = true;
@@ -100,7 +99,10 @@ var checkAnswer = function(_answer) {
 	} else {
 		//不正解
 		alert("攻撃がかわされて、攻撃を受けた！ " + damagePoint + "ポイントのダメージを受けた。")
-		point = point - damagePoint;
+		point = Number(point) - Number(damagePoint);
+		if (point < 0) {
+			point = 0;
+		}
 	}
 	nextQuiz(false);
 	return correct;
@@ -124,7 +126,10 @@ var nextQuiz = function(timeout) {
 	console.log("Json quizCount=" + quizJson.quiz_count);
 	if (timeout) {
 		alert("攻撃が遅いので攻撃を受けた！\n" + damagePoint + "ポイントのダメージを受けた。")
-		point = point - damagePoint;
+		point = Number(point) - Number(damagePoint);
+		if (point < 0) {
+			point = 0;
+		}
 	}
 	if (Number(quizCount) == Number(quizJson.quiz_count)) {
 		if (!hasNextStage) {
