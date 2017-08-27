@@ -1,7 +1,7 @@
 {
     "quiz_count": 6,
     "timeout": [
-	    7,5,3
+	    8,6,4
     ],
     "point": 5,
     "damage_point": 1,
