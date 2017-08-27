@@ -2,32 +2,62 @@ var quizJson = new Object;//クイズデータ
 var stage = 1;//ステージ
 var quizCount = 1;//問題番号
 var acquisitionPoint = 0;//獲得できるポイント
+var countDownTime = 1;
+var setTimeoutId = 0;
 var point = 0;//現在のポイント
+var perfectPoint = 0;//全問題正解のポイント
 var opr1 = 0;//計算値
 var opr2 = 0;//計算値
 var operator = "";
+var isConfirm = false;//入力確定しているか？
+var hasNextStage = false;
+var imgPreloader = new Image();
+var imgUrl;
+var imgStyle;
+
+imgPreloader.onload=function() {
+	//ロード完了で画像を表示
+	$("#quiz_image").css({'background-image':imgStyle});
+}
+
+var displayImage = function(filename) {
+	imgUrl = "image/" + filename;
+	imgStyle = "url('image/" + filename + "')";
+	imgPreloader.src = imgUrl;
+}
 
 //クイズの開始
 var startQuiz = function(_quizJson) {
 	quizJson = _quizJson;
+	
+	//画像取得
+	var imgCount = quizJson.image.length;
+	var imgIdx = Math.floor(Math.random() * (imgCount));
+	displayImage(quizJson.image[imgIdx]);
+
 	acquisitionPoint = quizJson.point;
+	perfectPoint = perfectPoint + acquisitionPoint;
+	hasNextStage = quizJson.has_next_stage;
 	$("#acquisition_point").text("獲得できるポイント" + acquisitionPoint);
 	$("#stage").text("ステージ" + stage);
 	$("#quiz_count").text("第" + quizCount + "問目");
 	$("#quiz").text("問題" + quizCount + "に答える");
 	$("#point").text("現在" + point + "ポイント獲得");
 	//計算式の構築
-	opr1 = quizJson.ope1from + Math.floor(Math.random() * quizJson.ope1to);
-	opr2 = quizJson.ope2from + Math.floor(Math.random() * quizJson.ope2to);
+	opr1 = Math.floor(Math.random() * (quizJson.ope1to + 1 - quizJson.ope1from)) + quizJson.ope1from;
+	opr2 = Math.floor(Math.random() * (quizJson.ope2to + 1 - quizJson.ope2from)) + quizJson.ope2from;
 	operator = quizJson.operator;
 	console.log("quiz=" + opr1 + operator + opr2);
 	$("#calc").text(opr1 + operator + opr2);
 	  	
 	//クイズの出題
-	setTimeout(function(){nextQuiz(true)}, quizJson.timeout);
+	countDownTime = quizJson.timeout;
+	$("#count_down").text("残り" + countDownTime + "秒");
+	setTimeoutId = setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
 	$("#answer").focus();
 	$("#answer").keypress(function (e) {
 		if (e.which == 13) {
+			isConfirm = true;
 			checkAnswer(Number($("#answer").val()));
 		}
 	});
@@ -67,6 +97,18 @@ var checkAnswer = function(_answer) {
 	return correct;
 }
 
+// カウントダウン表示
+var dispCountDown = function() {
+	countDownTime = countDownTime - 1;
+	$("#count_down").text("残り" + countDownTime + "秒");	
+	if (countDownTime == 0 && !isConfirm) {
+		//時間切れ
+		nextQuiz(true);
+	} else {
+		setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
+	}
+}
+
 // 次のクイズへ
 var nextQuiz = function(timeout) {
 	console.log("quizCount=" + quizCount);
@@ -75,6 +117,11 @@ var nextQuiz = function(timeout) {
 		alert("時間切れでーす。")
 	}
 	if (Number(quizCount) == Number(quizJson.quiz_count)) {
+		if (!hasNextStage) {
+			//クイズ終了
+			finishQuiz();
+			return;
+		}
 		stage++;
 		quizCount = 1;
 	} else {
@@ -85,6 +132,28 @@ var nextQuiz = function(timeout) {
 		"?stage=" + stage + 
 		"&quizCount=" + quizCount +
 		"&point=" + point;
+}
+
+var finishQuiz = function() {
+	clearTimeout(setTimeoutId);
+	
+	var finishMsg = "終了〜"
+	if (point == perfectPoint) {
+		displayImage("perfect.jpg");
+		finishMsg = "やりました！パーフェクト！！"
+	} else {
+		$("#quiz_image").remove();
+	}
+	$("#calc").remove();
+	$("#count_down").remove();
+	$("#acquisition_point").remove();
+	$("#stage").remove();
+	$("#quiz_count").remove();
+	$("#quiz").remove();
+	$("#answer").remove();
+	$("#point").remove();
+	$("#finish_comment1").text(finishMsg);
+	$("#finish_comment2").text("あなたは" + point + "ポイント獲得しました！");	
 }
 
 //変数argはオブジェクトですよ
