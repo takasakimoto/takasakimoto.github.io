@@ -61,7 +61,7 @@ var startQuiz = function(_quizJson) {
 	countDownTime = quizJson.timeout[level-1];
 	$("#count_down").text("残り" + countDownTime + "秒");
 	setTimeoutId = setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
-    $('#input_focus').trigger('click');
+    $('#answer').focus();
 	$("#answer").keypress(function (e) {
 		if (e.which == 13) {
 			isConfirm = true;
