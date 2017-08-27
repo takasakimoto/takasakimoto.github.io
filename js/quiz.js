@@ -6,6 +6,7 @@ var acquisitionPoint = 0;//獲得できるポイント
 var countDownTime = 1;
 var setTimeoutId = 0;
 var point = 0;//現在のポイント
+var damagePoint = 0;//不正解もしくは時間切れでダメージを受けるポイント
 var perfectPoint = 0;//全問題正解のポイント
 var opr1 = 0;//計算値
 var opr2 = 0;//計算値
@@ -37,9 +38,10 @@ var startQuiz = function(_quizJson) {
 	displayImage(quizJson.image[imgIdx]);
 
 	acquisitionPoint = quizJson.point;
+	damagePoint = quizJson.damage_point;
 	perfectPoint = perfectPoint + acquisitionPoint;
 	hasNextStage = quizJson.has_next_stage;
-	$("#acquisition_point").text("獲得できるポイント" + acquisitionPoint);
+	$("#acquisition_point").text("獲得できるポイント " + acquisitionPoint + " (ダメージを受けるポイント " + damagePoint + " )");
 	$("#stage").text("ステージ" + stage);
 	$("#quiz_count").text("第" + quizCount + "問目");
 	$("#answer_confirm").text("問題" + quizCount + "に答える");
@@ -59,7 +61,16 @@ var startQuiz = function(_quizJson) {
 	countDownTime = quizJson.timeout[level-1];
 	$("#count_down").text("残り" + countDownTime + "秒");
 	setTimeoutId = setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
-	$("#answer").focus();
+    var focusTextField = function(){
+        console.log("answer focus");
+    };
+    var onClickHandler = function(){
+        $('#answer').focus();
+    };
+    $('#answer').bind('focus', focusTextField);
+    $('#input_focus').bind('click', onClickHandler);
+    $('#input_focus').trigger('click');
+//	$("#answer").focus();
 	$("#answer").keypress(function (e) {
 		if (e.which == 13) {
 			isConfirm = true;
@@ -92,11 +103,12 @@ var checkAnswer = function(_answer) {
 	}
 	if (correct) {
 		//正解
-		alert("正解！！")
+		alert("攻撃成功！！")
 		point = Number(point) + Number(acquisitionPoint);
 	} else {
 		//不正解
-		alert("不正解だよー！！")
+		alert("攻撃がかわされて、攻撃を受けた！ " + damagePoint + "ポイントのダメージを受けた。")
+		point = point - damagePoint;
 	}
 	nextQuiz(false);
 	return correct;
@@ -119,7 +131,8 @@ var nextQuiz = function(timeout) {
 	console.log("quizCount=" + quizCount);
 	console.log("Json quizCount=" + quizJson.quiz_count);
 	if (timeout) {
-		alert("時間切れでーす。")
+		alert("攻撃が遅いので攻撃を受けた！\n" + damagePoint + "ポイントのダメージを受けた。")
+		point = point - damagePoint;
 	}
 	if (Number(quizCount) == Number(quizJson.quiz_count)) {
 		if (!hasNextStage) {
@@ -240,15 +253,4 @@ $.getJSON(jsonFilename ,function(_quizJson) {
 		return;
 	}	
 	startQuiz(_quizJson);
-});
-
-$(document).ready(function(){
-    var focusTextField = function(){
-        console.log("answer focus");
-    };
-    var onClickHandler = function(){
-        $('#input_focus').focus();
-    };
-    $('#answer').bind('focus', focusTextField);
-    $('#input_focus').bind('click', onClickHandler);
 });

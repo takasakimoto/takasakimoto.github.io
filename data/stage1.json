@@ -4,6 +4,7 @@
 	    7,5,3
     ],
     "point": 5,
+    "damage_point": 1,
     "image": [
 		"a.jpeg","b.png","c.jpg"
     ],

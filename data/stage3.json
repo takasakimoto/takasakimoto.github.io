@@ -4,6 +4,7 @@
 	    30,20,10
     ],
     "point": 15,
+    "damage_point": 3,
     "image": [
 		"d.jpeg","e.jpeg","f.jpeg"
     ],
