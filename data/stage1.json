@@ -1,8 +1,9 @@
 {
-	"quiz_level": 1,
-    "quiz_count": 10,
-    "timeout": 10,
-    "point": 10,
+    "quiz_count": 5,
+    "timeout": [
+	    7,5,3
+    ],
+    "point": 5,
     "image": [
 		"a.jpeg","b.png","c.jpg"
     ],

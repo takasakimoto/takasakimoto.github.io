@@ -1,16 +1,16 @@
 {
-    "quiz_count": 3,
+    "quiz_count": 2,
     "timeout": [
-	    15,10,5
+	    30,20,10
     ],
-    "point": 10,
+    "point": 15,
     "image": [
 		"d.jpeg","e.jpeg","f.jpeg"
     ],
     "operator": "÷",
-    "ope1from": 10,
-    "ope1to": 99,
+    "ope1from": 100,
+    "ope1to": 999,
     "ope2from": 1,
     "ope2to": 9,
-    "has_next_stage": true
+    "has_next_stage": false
 }

@@ -1,5 +1,6 @@
 var quizJson = new Object;//クイズデータ
 var stage = 1;//ステージ
+var level = 1;//難易度
 var quizCount = 1;//問題番号
 var acquisitionPoint = 0;//獲得できるポイント
 var countDownTime = 1;
@@ -41,7 +42,11 @@ var startQuiz = function(_quizJson) {
 	$("#acquisition_point").text("獲得できるポイント" + acquisitionPoint);
 	$("#stage").text("ステージ" + stage);
 	$("#quiz_count").text("第" + quizCount + "問目");
-	$("#quiz").text("問題" + quizCount + "に答える");
+	$("#answer_confirm").text("問題" + quizCount + "に答える");
+	$("#answer_confirm").click(function(){
+		isConfirm = true;
+		checkAnswer(Number($("#answer").val()));
+	});
 	$("#point").text("現在" + point + "ポイント獲得");
 	//計算式の構築
 	opr1 = Math.floor(Math.random() * (quizJson.ope1to + 1 - quizJson.ope1from)) + quizJson.ope1from;
@@ -51,7 +56,7 @@ var startQuiz = function(_quizJson) {
 	$("#calc").text(opr1 + operator + opr2);
 	  	
 	//クイズの出題
-	countDownTime = quizJson.timeout;
+	countDownTime = quizJson.timeout[level-1];
 	$("#count_down").text("残り" + countDownTime + "秒");
 	setTimeoutId = setTimeout(function(){dispCountDown()}, 1000/*1秒*/);
 	$("#answer").focus();
@@ -131,6 +136,7 @@ var nextQuiz = function(timeout) {
 		"right.html"  +
 		"?stage=" + stage + 
 		"&quizCount=" + quizCount +
+		"&perfect=" + perfectPoint +
 		"&point=" + point;
 }
 
@@ -138,22 +144,50 @@ var finishQuiz = function() {
 	clearTimeout(setTimeoutId);
 	
 	var finishMsg = "終了〜"
-	if (point == perfectPoint) {
-		displayImage("perfect.jpg");
-		finishMsg = "やりました！パーフェクト！！"
-	} else {
-		$("#quiz_image").remove();
+	var imgFilename = "";
+	//正解率で出来具合を表示
+	var percent = parseInt(point / perfectPoint * 100);
+	console.log("perfectPoint=" + perfectPoint);
+	console.log("percent=" + percent);
+	switch (true) {
+	case (percent == 100) :
+		finishMsg = "やりました！パーフェクト！！";
+		imgFilename = "perfect.jpg";
+		break;
+	case (percent >= 80) :
+		finishMsg = "すばらしい！";
+		imgFilename = "verygood.jpeg";
+		break;
+	case (percent >= 70) :
+		finishMsg = "おお。いいね！";
+		imgFilename = "good.jpg";
+		break;
+	case (percent >= 60) :
+		finishMsg = "まぁまぁいいんじゃね。";
+		imgFilename = "soso.jpeg";
+		break;
+	case (percent >= 50) :
+		finishMsg = "まだまだだな。。";
+		imgFilename = "notsogood.jpg";
+		break;
+	case (percent >= 40) :
+		finishMsg = "がんばれ〜〜〜";
+		imgFilename = "sobad.jpg";
+		break;
+	case (percent < 40) :
+		finishMsg = "コラ〜！出直してこーい！！";
+		imgFilename = "bad.jpeg";
+		break;
 	}
+	displayImage(imgFilename);
 	$("#calc").remove();
 	$("#count_down").remove();
-	$("#acquisition_point").remove();
-	$("#stage").remove();
-	$("#quiz_count").remove();
-	$("#quiz").remove();
+	$("#quiz_title").remove();
+	$("#answer_confirm").remove();
 	$("#answer").remove();
 	$("#point").remove();
 	$("#finish_comment1").text(finishMsg);
-	$("#finish_comment2").text("あなたは" + point + "ポイント獲得しました！");	
+	$("#finish_comment2").text(point + "ポイント獲得しました！（ポイント獲得率：" + percent + "%）");	
 }
 
 //変数argはオブジェクトですよ
@@ -179,15 +213,23 @@ for(var i=0;pair[i];i++) {
 if (arg.stage !== undefined) {
 	stage = arg.stage;
 }
+if (arg.level !== undefined) {
+	level = arg.level;
+}
 if (arg.quizCount !== undefined) {
 	quizCount = arg.quizCount;
+}
+if (arg.perfect !== undefined) {
+	perfectPoint = Number(arg.perfect);
 }
 if (arg.point !== undefined) {
 	point = arg.point;				
 	$("#point").text("現在" + point + "ポイント獲得");
 }
 console.log("stage=" + stage);
+console.log("level=" + level);
 console.log("quizCount=" + quizCount);
+console.log("perfect=" + perfectPoint);
 console.log("point=" + point);
 
 

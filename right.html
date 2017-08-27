@@ -6,27 +6,25 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <script src="./js/jquery.min.js"></script>
-<title>算数クイズ</title>
+<title>計算バトル</title>
 <link rel="stylesheet" type="text/css" href="css/right.css" media="all">
 </head>
 <body>
-	<h1 id="title"/>
-	<div id="acquisition_point"></div>
-	<div id="stage"></div>
-	<div id="quiz_count"></div>
-	<span id="quiz_image" class="contain" style="background-image: url('image/b.png')"></span>
-	<div id="calc"></div>
+	<div id="quiz_title"><span id="stage"></span>-<span id="quiz_count"></span>:<span id="acquisition_point"></span></div>
+	<div id="point"></div>
+	<span id="quiz_image" class="contain"></span>
+	<div id="calc" style="font-size: 2em"></div>
+	<div id="count_down"></div>
 	<input id="answer" type="text" size="40" maxlength="20">
-	<button id="quiz" value="button" onclick="mc.checkAnswer()">
+	<a id="answer_confirm" href="#" class="button">
 	問題に答える
+	</a>
 	</button>
 	<div id="finish_comment1"></div>
 	<div id="finish_comment2"></div>
-	<button id="" value="button" onclick="window.location.href='./right.html'">
-	最初からやる
-	</button>
-	<div id="count_down"></div>
-	<div id="point"></div>
+	<a id="try_again" href="index.html" class="button">
+	トップ画面に戻る
+	</a>
 </body>
 <script type="text/javascript" src="./js/quiz.js">
 </script>
